@@ -8,7 +8,7 @@ Created on Sun Dec 12 14:25:38 2021
 
 
 import sys
-sys.path.insert(0, r'C:\Users\AZN-6\Documents\GitHub\MpNM\Multi-physics-Network-Model')
+sys.path.insert(0, r'C:\Users\AZN-6\Documents\GitHub\Multi-physics-Network-Model')
 
 from mpnm import topotools, algorithm, network as net
 from scipy.sparse import coo_matrix
@@ -56,7 +56,7 @@ def lambda_calc_nb(j, heat_coe, fluid_lambda, solid_lambda, network_throat_conns
 #     return [heat_s_f,heat_s_f_bronze,effect_lambda]
 
 
-sample_data_root = r'C:/Users/AZN-6/Documents/GitHub/MpNM/Multi-physics-Network-Model/sample_data/Sphere_stacking_250_500_2800_20/'
+sample_data_root = r'C:/Users/AZN-6/Documents/GitHub/Multi-physics-Network-Model/sample_data/Sphere_stacking_250_500_2800_20/'
 path = sample_data_root + 'pore_network'
 # project = op.io.Statoil.load(path=path, prefix='sphere_stacking_250_500_2800_20')
 
