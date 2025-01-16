@@ -5,6 +5,10 @@ Created on Tue Apr 26 21:22:24 2022
 
 @author: htmt
 """
+import sys
+sys.path.insert(0, r'C:\Users\AZN-6\Documents\GitHub\MpNM\Multi-physics-Network-Model')
+
+
 from mpnm import network, topotools, algorithm
 import numpy as np
 import argparse
@@ -13,7 +17,7 @@ import time
 parser = argparse.ArgumentParser()
 # parser.add_argument('--Networkfile', default='../../sample_data/Bead_packing', help='input network path')
 # parser.add_argument('--Networkname', default='Bead_packing_1000_25', help='network file name')
-parser.add_argument('--Networkfile', default='../../sample_data/Bentheimer_256', help='input network path')
+parser.add_argument('--Networkfile', default=r'C:\Users\AZN-6\Documents\GitHub\MpNM\Multi-physics-Network-Model\sample_data\Bentheimer_256', help='input network path')
 parser.add_argument('--Networkname', default='Bentheimer256_0', help='network file name')
 parser.add_argument('--out_dir_model', default='../mod_out_new', help='output file for model')
 parser.add_argument('--imsize', type=int, default=[1000, 1000, 1000], help='network size')
