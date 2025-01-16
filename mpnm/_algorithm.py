@@ -6,7 +6,7 @@ Created on Fri Jun 17 18:48:35 2022
 @author: htmt
 """
 import numpy as np
-from scipy.sparse import coo_matrix
+from scipy.sparse import coo_matrix, save_npz
 import scipy.sparse.linalg as ssl
 import pypardiso as pp
 # import openpnm as op
@@ -237,7 +237,102 @@ class algorithm(Base):
         AH = coo_matrix((coe_A_i, (pn['throat.conns'][:, 1], pn['throat.conns'][:, 0])),
                         shape=(num_node, num_node), dtype=np.float64).tocsr()
         A1 = (AH + A).tocoo()
+        print("A1 saved")
+        save_npz(r"C:\Users\AZN-6\Documents\GitHub\MpNM\A1mat", A1, compressed=True)
+
+        # print('A1', A1)
+
+        value = None
+        for r, c, v in zip(A1.row, A1.col, A1.data):
+            if (r, c) == (22798, 9683):
+                value = v
+                break
+
+        print(f"Value at (22798, 9683): {value}")
+
+        value = None
+
+        for r, c, v in zip(A1.row, A1.col, A1.data):
+            if (r, c) == (9683, 22798):
+                value = v
+                break
+
+        print(f"Value at (9683, 22798): {value}")
+
+        value = None
+        for r, c, v in zip(A1.row, A1.col, A1.data):
+            if (r, c) == (24093, 6010):
+                value = v
+                break
+
+        print(f"Value at (24093, 6010) positive delta_p: {value}")
+
+        value = None
+
+        for r, c, v in zip(A1.row, A1.col, A1.data):
+            if (r, c) == (6010, 24093):
+                value = v
+                break
+
+        print(f"Value at (6010, 24093) positive delta_p: {value}")
+
+
+        value = None
+        for r, c, v in zip(A0.row, A0.col, A0.data):
+            if (r, c) == (24093, 6010):
+                value = v
+                break
+
+        print(f"Value at (24093, 6010) positive delta_p: {value}")
+
+        value = None
+
+        for r, c, v in zip(A0.row, A0.col, A0.data):
+            if (r, c) == (6010, 24093):
+                value = v
+                break
+
+        print(f"Value at (6010, 24093) positive delta_p: {value}")
+
+
+        value = None
+        for r, c, v in zip(A0.row, A0.col, A0.data):
+            if (r, c) == (22798, 9683):
+                value = v
+                break
+
+        print(f"Value at (22798, 9683): {value}")
+
+        value = None
+
+        for r, c, v in zip(A0.row, A0.col, A0.data):
+            if (r, c) == (9683, 22798):
+                value = v
+                break
+
+        print(f"Value at (9683, 22798): {value}")
+
+
+        print("A0 saved")
+        save_npz(r"C:\Users\AZN-6\Documents\GitHub\MpNM\A0mat", A0, compressed=True)
+
+
+
         A = (A0 - A1).tocoo()
+
+        print("A saved")
+        save_npz(r"C:\Users\AZN-6\Documents\GitHub\MpNM\Amat", A, compressed=True)
+
+
+        value = None
+
+        for r, c, v in zip(A.row, A.col, A.data):
+            if (r, c) == (6010, 24093):
+                value = v
+                break
+
+        print(f"Value at (6010, 24093) positive delta_p conv and cond: {value}")
+
 
         dig = np.array(A.sum(axis=0)).reshape(num_node)
         b = np.zeros(num_node)
