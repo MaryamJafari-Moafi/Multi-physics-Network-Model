@@ -6,7 +6,9 @@ Created on Sun Dec 12 14:25:38 2021
 @author: htmt
 """
 
+
 import sys
+sys.path.insert(0, r'C:\Users\AZN-6\Documents\GitHub\MpNM\Multi-physics-Network-Model')
 
 from mpnm import topotools, algorithm, network as net
 from scipy.sparse import coo_matrix
@@ -17,7 +19,7 @@ import os
 from sklearn.metrics import mean_absolute_percentage_error, mean_squared_error, r2_score
 import numba as nb
 
-nb.set_num_threads(10)
+nb.set_num_threads(2)
 
 
 def lambda_calc(network, j, heat_coe, fluid, solid):
@@ -54,7 +56,7 @@ def lambda_calc_nb(j, heat_coe, fluid_lambda, solid_lambda, network_throat_conns
 #     return [heat_s_f,heat_s_f_bronze,effect_lambda]
 
 
-sample_data_root = '../../sample_data/Sphere_stacking_250_500_2800_20/'
+sample_data_root = r'C:/Users/AZN-6/Documents/GitHub/MpNM/Multi-physics-Network-Model/sample_data/Sphere_stacking_250_500_2800_20/'
 path = sample_data_root + 'pore_network'
 # project = op.io.Statoil.load(path=path, prefix='sphere_stacking_250_500_2800_20')
 
@@ -444,7 +446,8 @@ for n in np.arange(len(re_s)):
 
 
             idx = 0
-            while mean_squared_error(P_profile_back, P_profile_tem) ** 0.5 > 1e-1:
+            # while mean_squared_error(P_profile_back, P_profile_tem) ** 0.5 > 1e-1:
+            while mean_squared_error(P_profile_back, P_profile_tem) ** 0.5 > 0.5:
                 # print(mean_absolute_percentage_error(P_profile_back, P_profile_tem))
 
                 if idx > 30 and mean_absolute_percentage_error(P_profile_back, P_profile_tem) < 1e-3:
@@ -538,6 +541,18 @@ for n in np.arange(len(re_s)):
             coe_A = g_ij * dualn['throat.Cp'] * dualn['throat.density'] * delta_p * (u_direct)
             coe_A_i = g_ij * dualn['throat.Cp'] * dualn['throat.density'] * delta_p * (-u_direct_i)
 
+            print('delta_p[10]', delta_p[10])
+            print('coe_A[10]', coe_A[10], 'coe_A_i[10]', coe_A_i[10])
+            print('pn[throat.conns][:, 1]',pn['throat.conns'][:, 1][10],'pn[throat.conns][:, 0]',pn['throat.conns'][:, 0][10])
+
+            # print('positive', pn['throat.conns'][delta_p_o>0])
+
+            print('delta_p[200]', delta_p[200])
+            print('coe_A[200]', coe_A[200], 'coe_A_i[200]', coe_A_i[200])
+            
+            print('pn[throat.conns][:, 1][200]',pn['throat.conns'][:, 1][200],'pn[throat.conns][:, 0][200]',pn['throat.conns'][:, 0][200])
+            # print('throat connection',pn['throat.conns'])
+
             # coe_A for convection heat transfer
             # _i for slecting direct of fluid
             # thermal_con_dual=dualn['throat.solid']*solid['lambda']+dualn['throat.connect']*solid['lambda']+dualn['throat.void']*fluid['lambda'] #solid_pore
@@ -550,6 +565,9 @@ for n in np.arange(len(re_s)):
                 dualn['throat.connect'] & dualn['throat.boundary_connect']]
 
             coe_B = -dualn['throat.radius'] ** 2 * np.pi / dualn['throat.length'] * thermal_con_dual
+
+            print('coe_B[10]',coe_B[10])
+            print('coe_B[200]',coe_B[200])
             # coe_B for thermal conductivity matrix calculating
 
             # _----------------------------steady-state-------------------------------#
