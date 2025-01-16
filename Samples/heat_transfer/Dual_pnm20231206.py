@@ -493,12 +493,17 @@ for n in np.arange(len(re_s)):
             # ---------------'''temperature process '''---------------#
 
             flux_Throat_profile = delta_p * coe_A_P + 1.0e-12
-            Vel_Throat_profile = flux_Throat_profile / pn['throat.radius'] ** 2 / 4 / pn['throat.real_shape_factor']
+            Vel_Throat_profile = flux_Throat_profile / pn['throat.radius'] ** 2 / 4 / pn['throat.real_shape_factor']            
             RE_th = Vel_Throat_profile * pn['throat.radius'] * 2 * fluid['density'] / pn['throat.viscosity']
             # flux_Pore_profile=[cal_pore_veloc(pn,fluid,coe_A,P_profile,a) for a in pn['pore._id']]
             Vel_Pore_profile = topotools().cal_pore_veloc(pn, fluid, coe_A_P, P_profile[dualn['pore.void']],
                                                           pn['pore._id']) / 2
+            
+            print("pore velocity", Vel_Pore_profile)
+
             RE_po = Vel_Pore_profile * pn['pore.radius'] * 2 * fluid['density'] / pn['pore.viscosity']
+            print("pore reynolds number", RE_po)
+
             # P_profile_o=np.copy(P_profile)
             RE_po_o = np.copy(RE_po)
             delta_p_o = np.copy(delta_p)
@@ -514,7 +519,13 @@ for n in np.arange(len(re_s)):
 
             Pr_num = dualn['pore.Cp'] * dualn['pore.viscosity'] / dualn['pore.lambda']
 
+            print("pore Prandtl number", Pr_num)
+
             heat_coe = (2 + (0.4 * RE_po ** 0.5 + 0.06 * RE_po ** 0.667) * Pr_num ** 0.4) * dualn['pore.lambda']
+
+            
+
+
             # heat_coe=(2+1.3*Pr_num**0.15+(0.66*RE_po**0.5)*Pr_num**0.31)*dualn['pore.lambda']
             # heat_coe=(3.212*RE_po**0.335*Pr_num**0.438)*dualn['pore.lambda']
             '''
@@ -538,6 +549,7 @@ for n in np.arange(len(re_s)):
             lambda_map = lambda_calc(dualn, dualn['throat._id'], heat_coe, fluid, solid)
             heat_s_f = lambda_map[:, 0]
             heat_s_f_bronze = lambda_map[:, 0]
+            print("Heat transfer coefficient", heat_s_f)
             coe_A = g_ij * dualn['throat.Cp'] * dualn['throat.density'] * delta_p * (u_direct)
             coe_A_i = g_ij * dualn['throat.Cp'] * dualn['throat.density'] * delta_p * (-u_direct_i)
 
