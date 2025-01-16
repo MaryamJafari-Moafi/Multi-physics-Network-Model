@@ -277,40 +277,40 @@ class algorithm(Base):
         print(f"Value at (6010, 24093) positive delta_p: {value}")
 
 
-        value = None
-        for r, c, v in zip(A0.row, A0.col, A0.data):
-            if (r, c) == (24093, 6010):
-                value = v
-                break
+        # value = None
+        # for r, c, v in zip(A0.row, A0.col, A0.data):
+        #     if (r, c) == (24093, 6010):
+        #         value = v
+        #         break
 
-        print(f"Value at (24093, 6010) positive delta_p: {value}")
+        # print(f"Value at (24093, 6010) positive delta_p: {value}")
 
-        value = None
+        # value = None
 
-        for r, c, v in zip(A0.row, A0.col, A0.data):
-            if (r, c) == (6010, 24093):
-                value = v
-                break
+        # for r, c, v in zip(A0.row, A0.col, A0.data):
+        #     if (r, c) == (6010, 24093):
+        #         value = v
+        #         break
 
-        print(f"Value at (6010, 24093) positive delta_p: {value}")
+        # print(f"Value at (6010, 24093) positive delta_p: {value}")
 
 
-        value = None
-        for r, c, v in zip(A0.row, A0.col, A0.data):
-            if (r, c) == (22798, 9683):
-                value = v
-                break
+        # value = None
+        # for r, c, v in zip(A0.row, A0.col, A0.data):
+        #     if (r, c) == (22798, 9683):
+        #         value = v
+        #         break
 
-        print(f"Value at (22798, 9683): {value}")
+        # print(f"Value at (22798, 9683): {value}")
 
-        value = None
+        # value = None
 
-        for r, c, v in zip(A0.row, A0.col, A0.data):
-            if (r, c) == (9683, 22798):
-                value = v
-                break
+        # for r, c, v in zip(A0.row, A0.col, A0.data):
+        #     if (r, c) == (9683, 22798):
+        #         value = v
+        #         break
 
-        print(f"Value at (9683, 22798): {value}")
+        # print(f"Value at (9683, 22798): {value}")
 
 
         print("A0 saved")
