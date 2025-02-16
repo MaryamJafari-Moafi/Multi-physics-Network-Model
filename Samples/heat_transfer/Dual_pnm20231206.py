@@ -36,8 +36,7 @@ def lambda_calc_nb(j, heat_coe, fluid_lambda, solid_lambda, network_throat_conns
         j_ = j[id]
         i = network_throat_conns[j_]
         l = network_throat_length[j_] / (network_pore_radius[i[0]] + network_pore_radius[i[1]])
-        heat_s_f = (network_throat_length[j_] / (
-                network_pore_radius[i[1]] * l * 3 / heat_coe[i[0]] + network_pore_radius[i[1]] * l / solid_lambda))
+        heat_s_f = (network_throat_length[j_] / (network_pore_radius[i[1]] * l * 3 / heat_coe[i[0]] + network_pore_radius[i[1]] * l / solid_lambda))  #equation 14
         heat_s_f_bronze = (network_throat_length[j_] / (
                 network_pore_radius[i[1]] * l * 3 / heat_coe[i[0]] + network_pore_radius[i[1]] * l / 75.3))
         effect_lambda = (network_throat_length[j_] / (
@@ -521,7 +520,7 @@ for n in np.arange(len(re_s)):
 
             print("pore Prandtl number", Pr_num)
 
-            heat_coe = (2 + (0.4 * RE_po ** 0.5 + 0.06 * RE_po ** 0.667) * Pr_num ** 0.4) * dualn['pore.lambda']
+            heat_coe = (2 + (0.4 * RE_po ** 0.5 + 0.06 * RE_po ** 0.667) * Pr_num ** 0.4) * dualn['pore.lambda']  #Nusselt number * lambda fluid (for equation 14c first part)
 
             
 
