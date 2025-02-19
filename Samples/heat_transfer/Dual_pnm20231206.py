@@ -466,10 +466,12 @@ for n in np.arange(len(re_s)):
                 P_profile_tem = algorithm().stead_stay_alg(pn, fluid, coe_A_P, Boundary_condition_P, resolution, False)
                 P_profile_tem = (P_profile_tem + P_profile_back) / 2
                 delta_p = P_profile_tem[pn['throat.conns'][:, 1]] - P_profile_tem[pn['throat.conns'][:, 0]]
+                print('P_profile_tem', P_profile_tem)
                 flux_Throat_profile = delta_p * coe_A_P + 1.0e-12
 
             P_profile_tem = algorithm().stead_stay_alg(pn, fluid, coe_A_P, Boundary_condition_P, resolution, False)
             P_profile[dualn['pore.void']] = P_profile_tem
+            print('P_profile_tem end', P_profile_tem)
             output = topotools().calculate_mass_flow(pn, Boundary_condition_P, coe_A_P, P_profile_tem, 4)
             abs_perm = output['pore.' + inlet + '_surface'] / (np.max(P_profile_tem[pn['pore.' + inlet + '_surface']]) - \
                                                                np.min(P_profile_tem[pn['pore.' + outlet + '_surface']]))
@@ -498,7 +500,10 @@ for n in np.arange(len(re_s)):
             # flux_Pore_profile=[cal_pore_veloc(pn,fluid,coe_A,P_profile,a) for a in pn['pore._id']]
             Vel_Pore_profile = topotools().cal_pore_veloc(pn, fluid, coe_A_P, P_profile[dualn['pore.void']],
                                                           pn['pore._id']) / 2
-            
+            print('coe_A_P', coe_A_P)
+            print("Throat velocity", Vel_Throat_profile)
+            print("Throat velocity max", Vel_Throat_profile.max())
+            print("Throat velocity mean", Vel_Throat_profile.mean())
             print("pore velocity", Vel_Pore_profile)
 
             RE_po = Vel_Pore_profile * pn['pore.radius'] * 2 * fluid['density'] / pn['pore.viscosity']
@@ -565,6 +570,7 @@ for n in np.arange(len(re_s)):
             print('pn[throat.conns][:, 1][200]',pn['throat.conns'][:, 1][200],'pn[throat.conns][:, 0][200]',pn['throat.conns'][:, 0][200])
             # print('throat connection',pn['throat.conns'])
 
+
             # coe_A for convection heat transfer
             # _i for slecting direct of fluid
             # thermal_con_dual=dualn['throat.solid']*solid['lambda']+dualn['throat.connect']*solid['lambda']+dualn['throat.void']*fluid['lambda'] #solid_pore
@@ -578,8 +584,20 @@ for n in np.arange(len(re_s)):
 
             coe_B = -dualn['throat.radius'] ** 2 * np.pi / dualn['throat.length'] * thermal_con_dual
 
+            print('dualn[throat.length].mena()',dualn['throat.length'].mean())
+            
+            print('radius.mean()',pn['pore.radius'].mean())
+
+            print('max coe_B', coe_B.mean())
+
+            print('max coe_A', coe_A.mean())
+
+            print('max coe_A_i', coe_A_i.mean())
+
             print('coe_B[10]',coe_B[10])
             print('coe_B[200]',coe_B[200])
+
+            print('heat_s_f', heat_s_f)
             # coe_B for thermal conductivity matrix calculating
 
             # _----------------------------steady-state-------------------------------#
