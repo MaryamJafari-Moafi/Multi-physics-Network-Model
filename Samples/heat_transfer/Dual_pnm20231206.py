@@ -349,6 +349,8 @@ for n in np.arange(len(re_s)):
 
         # ------------------------boundary_condition-------------------------------#
 
+        print('injection rate:', u)
+
         Boundary_condition_P = {}
         Boundary_condition_P['pore_inlet'] = {'pore.' + inlet + '_surface': [u, 'Neumann']}
         Boundary_condition_P['pore_outlet'] = {'pore.' + outlet + '_surface': [1000, 'Dirichlet']}
@@ -585,14 +587,15 @@ for n in np.arange(len(re_s)):
             coe_B = -dualn['throat.radius'] ** 2 * np.pi / dualn['throat.length'] * thermal_con_dual
 
             print('dualn[throat.length].mena()',dualn['throat.length'].mean())
+            print('dualn[throat.radius].mena()',dualn['throat.radius'].mean())
             
-            print('radius.mean()',pn['pore.radius'].mean())
+            print('pore radius.mean()',pn['pore.radius'].mean())
 
-            print('max coe_B', coe_B.mean())
+            print('mean coe_B', coe_B.mean())
 
-            print('max coe_A', coe_A.mean())
+            print('mean coe_A', coe_A.mean())
 
-            print('max coe_A_i', coe_A_i.mean())
+            print('mean coe_A_i', coe_A_i.mean())
 
             print('coe_B[10]',coe_B[10])
             print('coe_B[200]',coe_B[200])
