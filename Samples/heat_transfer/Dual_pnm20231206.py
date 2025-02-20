@@ -302,7 +302,7 @@ Perm = 1.012e-10
 re_s = np.array([1249, 1650, 1918, 100, 300, 743])
 for n in np.arange(len(re_s)):
     re = re_s[n]
-    print(re)
+    print('re:', re)
     vel = re * fluid['viscosity'] / fluid['density'] / (
             2 * imsize[1] * imsize[2] / (imsize[1] + imsize[2])) / resolution
     u = np.around(vel, 6)  #
@@ -509,6 +509,10 @@ for n in np.arange(len(re_s)):
             print("pore velocity", Vel_Pore_profile)
 
             RE_po = Vel_Pore_profile * pn['pore.radius'] * 2 * fluid['density'] / pn['pore.viscosity']
+
+            print('pn[pore.radius] average:', pn['pore.radius'].mean())
+            print('pn[pore.radius] min:', pn['pore.radius'].min())
+            print('pn[pore.radius] max:', pn['pore.radius'].max())
             print("pore reynolds number", RE_po)
 
             # P_profile_o=np.copy(P_profile)
@@ -530,7 +534,7 @@ for n in np.arange(len(re_s)):
 
             heat_coe = (2 + (0.4 * RE_po ** 0.5 + 0.06 * RE_po ** 0.667) * Pr_num ** 0.4) * dualn['pore.lambda']  #Nusselt number * lambda fluid (for equation 14c first part)
 
-            
+            print("pore Nusselt number", heat_coe/dualn['pore.lambda'])
 
 
             # heat_coe=(2+1.3*Pr_num**0.15+(0.66*RE_po**0.5)*Pr_num**0.31)*dualn['pore.lambda']
@@ -559,6 +563,12 @@ for n in np.arange(len(re_s)):
             print("Heat transfer coefficient", heat_s_f)
             coe_A = g_ij * dualn['throat.Cp'] * dualn['throat.density'] * delta_p * (u_direct)
             coe_A_i = g_ij * dualn['throat.Cp'] * dualn['throat.density'] * delta_p * (-u_direct_i)
+
+            print('g_ij mean: ', g_ij.mean())
+            print('g_ij max: ', g_ij.max())
+            print('g_ij min: ', g_ij.min())
+
+            print('dualn[throat.Cp]', dualn['throat.Cp'].mean())
 
             print('delta_p[10]', delta_p[10])
             print('coe_A[10]', coe_A[10], 'coe_A_i[10]', coe_A_i[10])
